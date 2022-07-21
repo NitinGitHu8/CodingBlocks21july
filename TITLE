@@ -1,0 +1,77 @@
+import java.util.*;
+import java.lang.*;
+public class Main {
+    static void func(char arr[],int n,int k){
+        int i=0;
+        int j=n-1;
+        boolean visited[]=new boolean[27];
+        while(i<j){
+            if(arr[i]!='?'&&arr[j]=='?'){
+                arr[j]=arr[i];
+                visited[arr[i]-'a'+1]=true;
+                i++;
+                j--;
+            }
+            else if(arr[i]=='?'&&arr[j]!='?'){
+                arr[i]=arr[j];
+                visited[arr[i]-'a'+1]=true;
+                i++;
+                j--;
+            }
+            else if(arr[i]=='?'&&arr[j]=='?'){
+                i++;
+                j--;
+                continue;
+            }
+            else if(arr[i]==arr[j]){
+                visited[arr[i]-'a'+1]=true;
+                i++;
+                j--;
+            }
+            else if(arr[i]!=arr[j]){
+                System.out.print("IMPOSSIBLE");
+                return;
+            }
+        }
+        if(i==j&&arr[i]!='?'&&arr[j]!='?'){
+            visited[arr[i]-'a'+1]=true;
+
+        }
+        while(i>=0){
+            while(k>1&&visited[k]==true){
+                k--;
+            }
+            if(i>=0&&arr[i]=='?'&&arr[j]=='?'){
+                arr[i]=arr[j]=(char)(k+'a'-1);
+                visited[arr[i]-'a'+1]=true;
+                i--;
+                j++;
+            }
+            else{
+                i--;
+                j++;
+            }
+
+        }
+        if(k==1&&visited[k]==true){
+            for(int m=0;m<n;m++){
+                System.out.print(arr[m]);
+            }
+        }
+        else{
+            System.out.print("IMPOSSIBLE");
+        }
+    }
+    public static void main(String args[]) {
+        //System.out.println("Hello World!");
+        int k;
+        Scanner s=new Scanner(System.in);
+        k=s.nextInt();
+        String str;
+        str=s.next();
+        char arr[]=str.toCharArray();
+        func(arr,arr.length,k);
+
+
+    }
+}
